@@ -1,0 +1,227 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+html, body {
+	font-family: 'Roboto', sans-serif;
+  height: 100%;
+}
+
+input {
+  height: 30px;
+  font-size: 1.6rem;
+  width: 100%;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+a:hover { color: gold;}
+/* App Styles */
+
+/* Common Styles */
+
+.title {
+  font-weight: 700;
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+}
+
+/* Flex Styles */
+.flex {
+    display: flex;
+}
+
+.centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.column {
+    flex-direction: column;
+}
+
+.s-between {
+	justify-content: space-between;
+}
+/* End Flex Styles */
+
+
+
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+.content-container {
+  width: 100%;
+  height: calc(100% - 56px);
+}
+
+/* Common Grid Styles */
+
+.grid-left {
+  display: flex;
+  align-items: center;
+}
+
+/* Button styles */
+
+.base-btn {
+	background-color: initial;
+	border: initial;
+	cursor: pointer;
+	width: 90px;
+	height: 40px;
+	font: inherit;
+}
+
+.base-btn:hover {
+  color: gold;
+}
+
+.base-btn:active {
+  border: 1px solid gold;
+}
+
+
+
+/* Nav bar styles */
+
+.logo {
+	padding: 20px;
+}
+
+.nav-bar {
+    width: 100%;
+    box-shadow: 0 3px 5px grey;
+}
+
+.nav-items {
+	height: 56px;
+}
+
+.nav-right-side {
+	padding: 20px;
+}
+
+/* Auth Page Styles */
+
+.auth-form {
+  height: 100%;
+}
+
+.auth-outer {
+  height: 100%;
+  width: 100%;
+}
+
+.auth-area {
+  background-color: whitesmoke;
+  padding: 20px;
+  border-radius: 10px;
+  transform: translateY(-56px);
+}
+
+.auth-grid {
+
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(4, 50px);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  text-align: center;
+}
+
+
+.label1 { grid-area: 1 / 1 / 2 / 2; }
+.input1 { grid-area: 1 / 2 / 2 / 4; }
+.label2 { grid-area: 2 / 1 / 3 / 2; }
+.input2 { grid-area: 2 / 2 / 3 / 4; }
+.label3 { grid-area: 3 / 1 / 4 / 2; }
+.input3 { grid-area: 3 / 2 / 4 / 4; }
+.label4 { grid-area: 4 / 1 / 5 / 2; }
+.input4 { grid-area: 4 / 2 / 5 / 4; }
+
+/* Blog Create Page Styles */
+
+.create-outer {
+  width: 100%;
+}
+
+.create-menu {
+  width: 80%;
+  margin-top: 20px;
+}
+
+.create-menu textarea {
+  width: 100%;
+}
+
+.user-blogs {
+  width: 30%;
+  background-color: whitesmoke;
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 10px;
+  box-shadow: 1px 1px 3px grey, -1px -1px 3px grey;
+}
+
+.post-row {
+  width: calc(100% - 20px);
+  background-color: rgb(138, 138, 138);
+  align-items: center;
+  border: 1px solid gold;
+  border-radius: 5px;
+  padding: 0 10px;
+  justify-content: space-between;
+}
+
