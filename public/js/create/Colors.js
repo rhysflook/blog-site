@@ -64,7 +64,6 @@ export class Colors {
     };
 
     createColorArea = (event) => {
-        console.log(this.currentHighlight);
         const { name, id } = event.target;
         if (name === "colorOption") {
             const { start, end } = this.currentHighlight;
@@ -72,28 +71,16 @@ export class Colors {
             this.coloredAreas.forEach((area, index) => {
                 const oldEnd = area.end;
                 const oldStart = area.start;
-                if (start <= oldStart && end > oldStart && end < oldEnd) {
+                if (overlapsStart(start, end, oldStart, oldEnd)) {
                     area.start = end;
-                } else if (
-                    start > oldStart &&
-                    start < oldEnd &&
-                    end >= oldEnd
-                ) {
+                } else if (overlapsEnd(start, end, oldStart, oldEnd)) {
                     area.end = start;
-                } else if (start <= oldStart && end >= oldEnd) {
+                } else if (overlapsAll(start, end, oldStart, oldEnd)) {
                     toDelete.push(index);
-                } else if (start > oldStart && end < oldEnd) {
+                } else if (containedWithin(start, end, oldStart, oldEnd)) {
                     toDelete.push(index);
-                    this.coloredAreas.push({
-                        color: area.color,
-                        start: oldStart,
-                        end: start,
-                    });
-                    this.coloredAreas.push({
-                        color: area.color,
-                        start: end,
-                        end: oldEnd,
-                    });
+                    this.appendNewArea(area.color, oldStart, start);
+                    this.appendNewArea(area.color, end, oldEnd);
                 }
             });
             toDelete.forEach((i) => {
@@ -102,11 +89,14 @@ export class Colors {
 
             this.coloredAreas.push({ color: id, start, end });
         }
-        console.log(this.coloredAreas);
 
         document.getSelection().removeAllRanges();
         this.removePalette();
         this.blog.showResult(document.getElementById("content").value);
+    };
+
+    appendNewArea = (color, start, end) => {
+        this.coloredAreas.push(color, start, end);
     };
 
     applyColors = (content) => {
@@ -139,3 +129,19 @@ export class Colors {
         console.log(event.target.selectionEnd);
     };
 }
+
+const overlapsStart = (start, end, oldStart, oldEnd) => {
+    return start <= oldStart && end > oldStart && end < oldEnd;
+};
+
+const overlapsEnd = (start, end, oldStart, oldEnd) => {
+    return start > oldStart && start < oldEnd && end >= oldEnd;
+};
+
+const overlapsAll = (start, end, oldStart, oldEnd) => {
+    return start <= oldStart && end >= oldEnd;
+};
+
+const containedWithin = (start, end, oldStart, oldEnd) => {
+    return start > oldStart && end < oldEnd;
+};
