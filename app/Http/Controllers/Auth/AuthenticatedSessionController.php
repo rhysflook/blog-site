@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +32,10 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+
+        // temp method of obtaining user id via session until auth token implemented
+        $user = User::where('email', $request->email)->first();
+        session(['user' => $user->id]);
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

@@ -1,0 +1,17 @@
+.blog-content h1, .blog-content h2, .blog-content h3, .blog-content h4, .blog-content h5, .blog-content h6 {
+    margin-bottom: 25px;
+}
+
+.blog-content p {
+    margin-bottom: 20px;
+}
+
+.blog-content blockquote {
+ border-left: 10px solid #ccc;
+}
+
+.blog-content pre {
+    color: white;
+    background-color: #1e1e1e;
+    padding: 4px;
+}

@@ -20,6 +20,7 @@ class CreateBlogPostsTable extends Migration
             $table->string('title', 255);
             $table->text('content');
             $table->string('category', 50);
+            $table->integer('times_read')->default(0);
             $table->timestamps();
         });
     }

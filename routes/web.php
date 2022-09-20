@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ReadBlogController;
 use App\Http\Controllers\UserBlogsController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,8 +24,17 @@ Route::get('/practice', function () {
 })
     ->name('practice');
 
+// Create page routes
 Route::get('/creation', [UserBlogsController::class, 'overview']);
 Route::post('/creation', [UserBlogsController::class, 'create']);
+Route::put('/creation', [UserBlogsController::class, 'update']);
+Route::delete('/creation/{id}', [UserBlogsController::class, 'destroy']);
+
+// Read page routes
+Route::get('/read', [ReadBlogController::class, 'getBlogs']);
+Route::get('/read/{id}', [ReadBlogController::class, 'fetch'])->name('read.blog');
+
+Route::get('/search', [ReadBlogController::class, 'find']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
