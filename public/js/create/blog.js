@@ -51,7 +51,14 @@ export class Blog {
 
     convertText = (event) => {
         if (event.key === "Delete" || event.key === "Backspace") {
-            alterColors(event);
+            this.colors.handleDelete(event);
+            document.getElementById("content").addEventListener(
+                "keydown",
+                (event) => {
+                    this.colors.getCaretPos(event);
+                },
+                { once: true }
+            );
         }
 
         this.showResult(event.target.value);

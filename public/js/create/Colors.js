@@ -12,10 +12,11 @@ export class Colors {
     };
     coloredAreas = [];
     delStartPos = 0;
+    delEndPos = 0;
     currentHighlight;
     palette = null;
     blog;
-    toDelete;
+    toDelete = [];
 
     showPalette = (event) => {
         const highlight = document.getSelection().toString();
@@ -129,15 +130,29 @@ export class Colors {
 
     getCaretPos = (event) => {
         if (event.key === "Delete" || event.key === "Backspace") {
-            console.log(event.target.selectionStart);
-            console.log(event.target.selectionEnd);
+            this.delEndPos = event.target.selectionEnd;
+        } else {
+            document.getElementById("content").addEventListener(
+                "keydown",
+                (event) => {
+                    this.getCaretPos(event);
+                },
+                { once: true }
+            );
         }
     };
 
-    alterColors = (event) => {
-        console.log(event);
-        console.log(event.target.selectionStart);
-        console.log(event.target.selectionEnd);
+    handleDelete = (event) => {
+        this.delStartPos = event.target.selectionStart;
+        this.coloredAreas.forEach((area, index) => {
+            const { start, end } = area;
+            console.log(this.delStartPos, this.delEndPos);
+            if (overlapsAll(this.delStartPos, this.delEndPos, start, end)) {
+                this.toDelete.push(index);
+            } else if (this.delEndPos < start) {
+            }
+        });
+        this.deleteAreas();
     };
 }
 

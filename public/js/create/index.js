@@ -36,3 +36,12 @@ const content = document.getElementById("content");
 content.addEventListener("keyup", (event) => {
     blog.convertText(event);
 });
+
+content.addEventListener(
+    "keydown",
+    (event) => {
+        console.log(event.key);
+        colors.getCaretPos(event);
+    },
+    { once: true }
+);
