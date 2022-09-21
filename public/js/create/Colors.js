@@ -74,35 +74,18 @@ export class Colors {
                 const oldStart = area.start;
                 if (start <= oldStart && end > oldStart && end < oldEnd) {
                     area.start = end;
-                    console.log("overwriting start");
-                    console.log(area);
                 } else if (
                     start > oldStart &&
                     start < oldEnd &&
                     end >= oldEnd
                 ) {
                     area.end = start;
-
-                    console.log("overwriting end");
-                    console.log(area);
                 } else if (start <= oldStart && end >= oldEnd) {
                     toDelete.push(index);
-                    console.log("overwriting all");
-                    console.log(area);
                 } else if (start > oldStart && end < oldEnd) {
                     toDelete.push(index);
-                    this.coloredAreas.push({
-                        color: area.color,
-                        start: oldStart,
-                        end: start,
-                    });
-                    this.coloredAreas.push({
-                        color: area.color,
-                        start: end,
-                        end: oldEnd,
-                    });
-                    console.log("overwriting center");
-                    console.log(area);
+                    this.appendNewArea(area.color, oldStart, start);
+                    this.appendNewArea(area.color, end, oldEnd);
                 }
             });
             toDelete
@@ -122,7 +105,7 @@ export class Colors {
     };
 
     appendNewArea = (color, start, end) => {
-        this.coloredAreas.push(color, start, end);
+        this.coloredAreas.push({ color, start, end });
     };
 
     applyColors = (content) => {
