@@ -10,6 +10,7 @@ export class Colors {
         regExCol: "#D16969",
         classCol: "#4EC9B0",
     };
+    characterCount = 0;
     coloredAreas = [];
     delStartPos = 0;
     delEndPos = 0;
@@ -128,28 +129,68 @@ export class Colors {
         return newString;
     };
 
-    getCaretPos = (event) => {
-        if (event.key === "Delete" || event.key === "Backspace") {
+    handleKeyInput = (event) => {
+        const diff = event.target.value.length - this.characterCount;
+        this.characterCount = event.target.value.length;
+        if (diff < 0) {
             this.delEndPos = event.target.selectionEnd;
+            this.handleDelete(event, diff);
         } else {
-            document.getElementById("content").addEventListener(
-                "keydown",
-                (event) => {
-                    this.getCaretPos(event);
-                },
-                { once: true }
-            );
+            this.shiftColorAreas(event);
+
         }
+        this.blog.showResult(event.target.value)
     };
 
-    handleDelete = (event) => {
-        this.delStartPos = event.target.selectionStart;
+    shiftColorAreas = (event) => {
         this.coloredAreas.forEach((area, index) => {
             const { start, end } = area;
-            console.log(this.delStartPos, this.delEndPos);
+            const pos = event.target.selectionEnd;
+            if (pos < start) {
+                area.start++;
+                area.end++;
+            } else if (pos >= start && pos - 1 <= end) {
+                area.end++;
+            }
+        })
+    }
+
+    handleDelete = (event, diff) => {
+        this.delStartPos = event.target.selectionStart;
+        this.delEndPos = this.delStartPos + Math.abs(diff);
+        this.coloredAreas.forEach((area, index) => {
+            const { start, end } = area;
+            let difference = this.delEndPos - this.delStartPos;
+            let calcDiff = difference === 0 ? 1 : difference;
+            console.log(`Deleting ${calcDiff} spaces.`)
+            console.log(`Start: ${start}, End: ${end}, DelStart: ${this.delStartPos}, DelEnd: ${this.delEndPos}`)
             if (overlapsAll(this.delStartPos, this.delEndPos, start, end)) {
+                console.log('Deleting whole area')
                 this.toDelete.push(index);
-            } else if (this.delEndPos < start) {
+            } else if (this.delEndPos <= start) {
+                console.log('Shifting area down')
+                if (event.key === 'Delete' && this.delStartPos === start) {
+                    if (end - start <= 1) {
+                        this.toDelete.push(index);
+                    }
+                } else {
+                    area.start -= calcDiff;
+
+                }
+                area.end -= calcDiff;
+            } else if (overlapsStart(this.delStartPos, this.delEndPos, start, end)) {
+                console.log('Deleting start')
+
+                area.start = this.delStartPos;
+                area.end = area.end - (this.delEndPos - area.start)
+            } else if (overlapsEnd(this.delStartPos, this.delEndPos, start, end)) {
+                console.log('Deleting end')
+
+                area.end = this.delStartPos;
+            } else if (containedWithin(this.delStartPos, this.delEndPos, start, end)) {
+                console.log('Shifting end down');
+                area.end = area.end - calcDiff;
+
             }
         });
         this.deleteAreas();

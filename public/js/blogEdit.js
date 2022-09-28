@@ -135,9 +135,9 @@ const createColorArea = (color, selStart, selEnd) => {
     coloredAreas.push({ color: colorHexCodes[color], selStart, selEnd });
 };
 
-const applyColors = () => {};
+const applyColors = () => { };
 
-const getCaretPos = (event) => {
+const handleKeyInput = (event) => {
     if (event.key === "Delete" || event.key === "Backspace") {
         console.log(event.target.selectionStart);
         console.log(event.target.selectionEnd);

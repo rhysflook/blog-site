@@ -32,16 +32,11 @@ postList.addEventListener("click", () => {
         });
 });
 
-const content = document.getElementById("content");
-content.addEventListener("keyup", (event) => {
-    blog.convertText(event);
-});
 
 content.addEventListener(
-    "keydown",
+    "input",
     (event) => {
-        console.log(event.key);
-        colors.getCaretPos(event);
+        console.log(window.getSelection().getRangeAt(0).endOffset)
+        colors.handleKeyInput(event);
     },
-    { once: true }
 );
