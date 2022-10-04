@@ -21,11 +21,11 @@ export class Colors {
 
     showPalette = (event) => {
         const highlight = document.getSelection().toString();
+        console.log(highlight)
         if (highlight !== "") {
-            const { selectionStart, selectionEnd } = event.target;
             this.currentHighlight = {
-                start: selectionStart,
-                end: selectionEnd,
+                start: window.getSelection().getRangeAt(0).startOffset,
+                end: window.getSelection().getRangeAt(0).endOffset,
             };
             const frag = document.createDocumentFragment();
             this.palette = this.createPalette(event);
@@ -75,11 +75,12 @@ export class Colors {
             });
             this.deleteAreas();
             this.coloredAreas.push({ color: id, start, end });
+            console.log(this.coloredAreas)
         }
 
         document.getSelection().removeAllRanges();
         this.removePalette();
-        this.blog.showResult(document.getElementById("content").value);
+        this.blog.showResult(document.getElementById("content").innerHTML);
     };
 
     adjustArea = (area, start, end, index) => {
@@ -130,8 +131,8 @@ export class Colors {
     };
 
     handleKeyInput = (event) => {
-        const diff = event.target.value.length - this.characterCount;
-        this.characterCount = event.target.value.length;
+        const diff = event.target.innerHTML.length - this.characterCount;
+        this.characterCount = event.target.innerHTML.length;
         if (diff < 0) {
             this.delEndPos = event.target.selectionEnd;
             this.handleDelete(event, diff);
@@ -139,13 +140,13 @@ export class Colors {
             this.shiftColorAreas(event);
 
         }
-        this.blog.showResult(event.target.value)
+        this.blog.debounce();
     };
 
     shiftColorAreas = (event) => {
         this.coloredAreas.forEach((area, index) => {
             const { start, end } = area;
-            const pos = event.target.selectionEnd;
+            const pos = window.getSelection().getRangeAt(0).endOffset;
             if (pos < start) {
                 area.start++;
                 area.end++;
@@ -156,7 +157,7 @@ export class Colors {
     }
 
     handleDelete = (event, diff) => {
-        this.delStartPos = event.target.selectionStart;
+        this.delStartPos = window.getSelection().getRangeAt(0).startOffset;
         this.delEndPos = this.delStartPos + Math.abs(diff);
         this.coloredAreas.forEach((area, index) => {
             const { start, end } = area;

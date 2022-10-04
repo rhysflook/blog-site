@@ -125,6 +125,12 @@ a:hover { color: gold;}
   height: calc(100% - 56px);
 }
 
+.content-area {
+  height: 500px;
+  width: 100%;
+  padding: 20px;
+}
+
 /* Common Grid Styles */
 
 .grid-left {
@@ -337,3 +343,29 @@ a:hover { color: gold;}
   width: 100%;
   margin-bottom: 160px;
 }
+
+/* Font bar */
+
+.font-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: azure;
+  border: solid black 1px;
+  box-shadow: 2px 2px 4px grey;
+}
+ .control {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px 5px 0;
+  padding: 5px;
+  font-size: 1.2rem;
+  font-weight: 900;
+  width: 20px;
+  height: 20px;
+  line-height: 0;
+  border: 1px solid black;
+  background-color: ghostwhite;
+ }
